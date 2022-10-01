@@ -46,4 +46,54 @@ public class Numbers {
             throw new IllegalArgumentException("세자릿수는 서로 다른 숫자로 구성되어야 합니다.");
         }
     }
+
+    public Judgement judgeNumbers(Numbers numbers) {
+        Judgement judgement = new Judgement();
+
+        int index = 0;
+        while (index < getSize() && judgement.getStrikeAndBallCount() != getSize()) {
+            Number challengerNumber = numbers.get(index);
+            judgeSingleNumber(challengerNumber, index, judgement);
+
+            index++;
+        }
+
+        return judgement;
+    }
+
+    private void judgeSingleNumber(Number challengerNumber, int targetNumberIndex, Judgement judgement) {
+        if (judgeStrike(challengerNumber, targetNumberIndex, judgement)) {
+            return;
+        }
+        judgeBall(challengerNumber, judgement);
+    }
+
+
+    private boolean judgeStrike(Number challengerNumber, int targetNumberIndex, Judgement judgement) {
+        if (challengerNumber.equals(get(targetNumberIndex))) {
+            judgement.increaseStrikeCount();
+            return true;
+        }
+        return false;
+    }
+
+    private void judgeBall(Number challengerNumber, Judgement judgement) {
+        int index = 0;
+
+        while (index < getSize() && !challengerNumber.equals(get(index))) {
+            index++;
+        }
+
+        if (index < getSize()) {
+            judgement.increaseBallCount();
+        }
+    }
+
+    private Number get(int index) {
+        return numbers.get(index);
+    }
+
+    private int getSize() {
+        return numbers.size();
+    }
 }

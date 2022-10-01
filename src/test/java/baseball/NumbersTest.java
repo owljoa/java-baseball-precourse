@@ -56,4 +56,72 @@ class NumbersTest {
         }
     }
 
+    @Test
+    @DisplayName("두 세자릿수의 각 위치별 숫자가 모두 같으면 3스트라이크로 판정")
+    void judgeNumbers_sameNumbersOnSamePositions_threeStrike() {
+        // given
+        Numbers defenderNumber = generateNumbers(1, 2, 3);
+        Numbers challengerNumbers = generateNumbers(1, 2, 3);
+
+        // when
+        Judgement judgement = defenderNumber.judgeNumbers(challengerNumbers);
+
+        // then
+        Assertions.assertEquals(3, judgement.getStrikeCount());
+        Assertions.assertEquals(0, judgement.getBallCount());
+    }
+
+    @Test
+    @DisplayName("두 세자릿수의 숫자들 중 같은 위치이면서 같은 숫자가 1개, 숫자는 같지만 다른 위치인 숫자가 2개이면 1스트라이트 2볼로 판정")
+    void judgeNumbers_oneIsSameAndSamePositionOthersAreSameButNotSamePosition_oneStrikeTwoBall() {
+        // given
+        Numbers defenderNumber = generateNumbers(1, 3, 2);
+        Numbers challengerNumbers = generateNumbers(1, 2, 3);
+
+        // when
+        Judgement judgement = defenderNumber.judgeNumbers(challengerNumbers);
+
+        // then
+        Assertions.assertEquals(1, judgement.getStrikeCount());
+        Assertions.assertEquals(2, judgement.getBallCount());
+    }
+
+    @Test
+    @DisplayName("두 세자릿수의 숫자들 중 같은 위치가 아니면서 같은 숫자가 3개이면, 3볼로 판정")
+    void judgeNumbers_sameNumbersOnDifferentPositions_threeBall() {
+        // given
+        Numbers defenderNumber = generateNumbers(1, 2, 3);
+        Numbers challengerNumbers = generateNumbers(2, 3, 1);
+
+        // when
+        Judgement judgement = defenderNumber.judgeNumbers(challengerNumbers);
+
+        // then
+        Assertions.assertEquals(0, judgement.getStrikeCount());
+        Assertions.assertEquals(3, judgement.getBallCount());
+    }
+
+    @Test
+    @DisplayName("두 세자릿수의 숫자들 중 같은 숫자가 하나도 없다면, 0스트라이크 0볼로 판정")
+    void judgeNumbers_noSameNumber_zeroStrikeZeroBall() {
+        // given
+        Numbers defenderNumber = generateNumbers(1, 2, 3);
+        Numbers challengerNumbers = generateNumbers(4, 5, 6);
+
+        // when
+        Judgement judgement = defenderNumber.judgeNumbers(challengerNumbers);
+
+        // then
+        Assertions.assertEquals(0, judgement.getStrikeCount());
+        Assertions.assertEquals(0, judgement.getBallCount());
+    }
+
+    private Numbers generateNumbers(int number1, int number2, int number3) {
+        List<Number> numberList = new ArrayList<>();
+        numberList.add(new Number(number1));
+        numberList.add(new Number(number2));
+        numberList.add(new Number(number3));
+
+        return new Numbers(numberList);
+    }
 }

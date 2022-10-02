@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Numbers {
 
-    private static final int NUMBER_SIZE_CONDITION = 3;
+    public static final int NUMBER_SIZE_CONDITION = 3;
 
     private final List<Number> numbers;
 

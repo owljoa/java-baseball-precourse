@@ -1,5 +1,6 @@
 package baseball;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Numbers {
@@ -13,6 +14,14 @@ public class Numbers {
         validateDifferentEachOther(numbers);
 
         this.numbers = numbers;
+    }
+
+    public static Numbers create(List<Integer> integers) {
+        List<Number> numbers = new ArrayList<>();
+        for (int integer : integers) {
+            numbers.add(new Number(integer));
+        }
+        return new Numbers(numbers);
     }
 
     public List<Number> getNumbers() {

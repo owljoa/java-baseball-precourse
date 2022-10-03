@@ -1,5 +1,7 @@
 package baseball;
 
+import java.util.List;
+
 public class Game {
 
     private boolean isExit;
@@ -31,5 +33,9 @@ public class Game {
     public void exit() {
         this.isSuspended = false;
         this.isExit = true;
+    }
+
+    public void enterChallengerNumber(List<Integer> integers) {
+        challenger.enterNumbers(integers);
     }
 }
